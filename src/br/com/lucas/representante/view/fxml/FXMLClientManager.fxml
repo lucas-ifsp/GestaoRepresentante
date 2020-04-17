@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="605.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlClientManager">
+   <children>
+      <AnchorPane prefHeight="80.0" prefWidth="792.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="txtFiltrar" layoutX="80.0" layoutY="30.0" onKeyReleased="#filterTableData" prefHeight="30.0" prefWidth="458.0" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="247.0" AnchorPane.topAnchor="30.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <Label fx:id="lbFiltrar" layoutX="20.0" layoutY="35.0" prefHeight="16.0" prefWidth="55.0" text="Filtrar:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="35.0">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <CheckBox fx:id="cbProspeccao" layoutX="565.0" layoutY="34.0" mnemonicParsing="false" onAction="#filterProspeccao" text="Prospeção" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="34.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="cbInativo" layoutX="687.0" layoutY="34.0" mnemonicParsing="false" onAction="#filterInativo" text="Inativo" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="34.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </CheckBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="6.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <TableView fx:id="tableClientes" prefHeight="438.0" prefWidth="752.0" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+              <columns>
+                <TableColumn fx:id="cNome" editable="false" prefWidth="300" text="Nome" />
+                <TableColumn fx:id="cFantasia" editable="false" prefWidth="250" text="Nome Fantasia" />
+                <TableColumn fx:id="cID" editable="false" prefWidth="150" text="ID Companhia" />
+                <TableColumn fx:id="cCnjpCpf" editable="false" prefWidth="150" text="CPNJ/CPF" />
+                <TableColumn fx:id="cTelefone1" editable="false" prefWidth="120" text="Telefone" />
+                <TableColumn fx:id="cTelefone2" editable="false" prefWidth="120" text="Telefone" />
+                <TableColumn fx:id="cTipo" editable="false" prefWidth="150" text="Tipo" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnExportar" layoutX="554.0" layoutY="464.0" mnemonicParsing="false" onAction="#exportData" prefHeight="40.0" prefWidth="100.0" text="Exportar" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="138.0">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button fx:id="btnAdicionar" layoutX="698.0" layoutY="464.0" mnemonicParsing="false" onAction="#addClient" prefHeight="40.0" prefWidth="100.0" text="Adicionar" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
