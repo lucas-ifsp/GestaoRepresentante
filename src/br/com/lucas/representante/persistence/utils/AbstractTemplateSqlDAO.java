@@ -51,7 +51,10 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
     @Override
     public void saveOrUpdate(T entity){
         Optional<T> result = select(getEntityKey(entity));
-        result.ifPresentOrElse((x) -> update(entity), () -> save(entity));
+        if(result.isPresent())
+            update(entity);
+        else
+            save(entity);
     }
 
     @Override
