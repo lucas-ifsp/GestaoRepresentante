@@ -1,9 +1,7 @@
 package br.com.lucas.representante.persistence.utils;
 
-import br.com.lucas.representante.persistence.dao.DAO;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.text.html.parser.Entity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,12 +15,15 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
     protected abstract String createSaveSql();
     protected abstract String createUpdateSql();
     protected abstract String createDeleteSql();
-    protected abstract String createSelectSql(K condition);
+    protected abstract String createSelectSql();
     protected abstract String createSelectAllSql();
+    protected abstract String createSelectBySql(String field);
 
     protected abstract void setEntityToPreparedStatement(@NotNull T entity, @NotNull PreparedStatement stmt) throws SQLException;
     protected abstract void setKeyToPreparedStatement(@NotNull K key, @NotNull PreparedStatement stmt) throws SQLException;
+    protected abstract void setFilterToPreparedStatement(@NotNull Object filter, @NotNull PreparedStatement stmt) throws SQLException;
     protected abstract T getEntityFromResultSet(@NotNull ResultSet rs) throws SQLException;
+    protected abstract K getEntityKey(@NotNull T entity);
 
     private String sql;
 
@@ -48,6 +49,12 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
+    public void saveOrUpdate(T entity){
+        Optional<T> result = select(getEntityKey(entity));
+        result.ifPresentOrElse((x) -> update(entity), () -> save(entity));
+    }
+
+    @Override
     public void delete(K key) {
         sql = createDeleteSql();
         executeSqlUsingKey(key);
@@ -63,10 +70,9 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
-    public List<T> selectAll() {
-        sql = createSelectAllSql();
+    public List<T> selectBy(String field, Object value) {
         try {
-            List<T> entities = executeSqlQuery();
+            List<T> entities = createAndExecuteQuery(field, value);
             return entities;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,19 +80,59 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
         return Collections.emptyList();
     }
 
-    private List<T> executeSqlQuery() throws SQLException {
-        return executeSqlQuery(null);
+    private List<T> createAndExecuteQuery(String field, Object value) throws SQLException {
+        sql = createProperSQL(field, value);
+        List<T> result = executeQuery(field, value);
+        return result;
     }
 
-    private List<T> executeSqlQuery(K key) throws SQLException {
+    protected String createProperSQL(String field, Object value) {
+        if(isSelectAllQuery(field, value))
+            return createSelectAllSql();
+        if(isSelectQuery(field, value))
+            return createSelectSql();
+        if(isSelectByQuery(field, value))
+            return createSelectBySql(field);
+        throw new IllegalArgumentException("Parâmetros incompatíveis. Não foi possível criar SQL.");
+    }
+
+    private boolean isSelectAllQuery(String field, Object value){
+        return field == null && value == null;
+    }
+
+    private boolean isSelectByQuery(String field, Object value){
+        return field != null && value != null;
+    }
+
+    private boolean isSelectQuery(String field, Object value){
+        return field == null && value != null;
+    }
+
+    private List<T> executeQuery(String field, Object value) throws SQLException {
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
-            if(key != null)
-                setKeyToPreparedStatement(key, stmt);
+            setFilterIfExists(field, value, stmt);
             ResultSet rs = stmt.executeQuery();
             List<T> resultList = getEntitiesFromResultSet(rs);
+            loadNestedEntitiesHook(resultList);
             return resultList;
         }
     }
+
+    protected void setFilterIfExists(String field, Object value, @NotNull PreparedStatement stmt) throws SQLException {
+        if(isSelectAllQuery(field, value))
+            return;
+        if(isSelectQuery(field, value)) {
+            setKeyToPreparedStatement((K) value, stmt);
+            return;
+        }
+        if(isSelectByQuery(field, value)) {
+            setFilterToPreparedStatement(value, stmt);
+            return;
+        }
+        throw new IllegalArgumentException("Parâmetros incompatíveis. Não foi possível ajustar os valores da consulta.");
+    }
+
+    protected void loadNestedEntitiesHook(List<T> entities) throws SQLException{}
 
     private List<T> getEntitiesFromResultSet(@NotNull ResultSet rs) throws SQLException {
         List<T> result = new ArrayList<>();
@@ -99,18 +145,17 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
 
     @Override
     public Optional<T> select(K key) {
-        sql = createSelectSql(key);
-        try {
-            List<T> entities = executeSqlQuery(key);
-            Optional<T> first = getFirstEntity(entities);
-            return first;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+        List<T> entities = selectBy(null, key);;
+        Optional<T> first = getFirstEntity(entities);
+        return first;
     }
 
     private Optional<T> getFirstEntity(@NotNull List<T> list) {
         return list.stream().findFirst();
+    }
+
+    @Override
+    public List<T> selectAll() {
+        return selectBy(null, null);
     }
 }

@@ -1,9 +1,8 @@
 package br.com.lucas.representante.persistence.dao;
 
-import br.com.lucas.representante.model.Address;
+import br.com.lucas.representante.model.entities.Address;
 import br.com.lucas.representante.persistence.utils.AbstractTemplateSqlDAO;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,29 +13,34 @@ public class DAOAddress extends AbstractTemplateSqlDAO<Address, String> {
     @Override
     protected String createSaveSql() {
         return "INSERT INTO Address(street, number, area, city, state, " +
-                "zipCode, pointOfReference, clientCnpjOrCpf) " +
+                "zipCode, pointOfReference, client) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
         return "UPDATE Address SET street = ?, number = ?, area = ?, city = ?, state = ?, " +
-                "zipCode = ?, pointOfReference = ? WHERE clientCnpjOrCpf = ?";
+                "zipCode = ?, pointOfReference = ? WHERE client = ?";
     }
 
     @Override
     protected String createDeleteSql() {
-        return "DELETE FROM Address WHERE clientCnpjOrCpf = ?";
+        return "DELETE FROM Address WHERE client = ?";
     }
 
     @Override
-    protected String createSelectSql(@Nullable String condition) {
-        return "SELECT * FROM Address WHERE clientCnpjOrCpf = ?";
+    protected String createSelectSql() {
+        return "SELECT * FROM Address WHERE client = ?";
     }
 
     @Override
     protected String createSelectAllSql() {
         return "SELECT * FROM Address";
+    }
+
+    @Override
+    protected String createSelectBySql(String field) {
+        return "SELECT * FROM Address WHERE " + field + " = ?";
     }
 
     @Override
@@ -57,15 +61,30 @@ public class DAOAddress extends AbstractTemplateSqlDAO<Address, String> {
     }
 
     @Override
+    protected void setFilterToPreparedStatement(@NotNull Object filter, @NotNull PreparedStatement stmt) throws SQLException {
+        if(filter instanceof  String)
+            stmt.setString(1, filter.toString());
+        else if(filter instanceof Integer)
+            stmt.setInt(1, (Integer)filter);
+        else
+            throw new SQLException("O tipo do filtro fornecido não é suportado pela consulta");
+    }
+
+    @Override
     protected Address getEntityFromResultSet(@NotNull ResultSet rs) throws SQLException {
         Address address = new Address(
                 rs.getString("street"),
                 rs.getInt("number"),
                 rs.getString("area"),
+                rs.getString("zipCode"),
                 rs.getString("city"),
                 rs.getString("state"),
-                rs.getString("zipCode"),
                 rs.getString("pointOfReference"));
         return address;
+    }
+
+    @Override
+    protected String getEntityKey(@NotNull Address entity) {
+        return entity.getResident().getCnpjOrCpf();
     }
 }

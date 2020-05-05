@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="844.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowClient">
+   <children>
+      <AnchorPane layoutY="595.0" prefHeight="60.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <Button fx:id="btnSalvar" layoutX="704.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveOrUpdateClient" prefHeight="35.0" prefWidth="80.0" text="Salvar" />
+            <Button fx:id="btnCancelar" layoutX="605.0" layoutY="13.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="80.0" text="Cancelar" />
+            <Button fx:id="btnExcluir" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#deleteClient" prefHeight="35.0" prefWidth="80.0" text="Excluir" visible="false" />
+         </children></AnchorPane>
+      <AnchorPane minHeight="-Infinity" prefHeight="320.0" prefWidth="787.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="txtNome" layoutX="120.0" layoutY="25.0" prefHeight="26.0" prefWidth="409.0">
+               <tooltip><Tooltip text="Razão Social" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtCnpjCpf" layoutX="635.0" layoutY="25.0" prefHeight="26.0" prefWidth="153.0" promptText="xx.xxx.xxx/xxxx-xx">
+               <tooltip><Tooltip text="CNPJ ou CPF" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtFantasia" layoutX="120.0" layoutY="66.0" prefHeight="26.0" prefWidth="409.0">
+               <tooltip><Tooltip text="Nome Fantasia" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtIDCorporativo" layoutX="635.0" layoutY="66.0" prefHeight="26.0" prefWidth="153.0">
+               <tooltip><Tooltip text="ID Corporativo" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtInscEstadual" layoutX="121.0" layoutY="110.0" prefHeight="26.0" prefWidth="139.0" promptText="xx.xxx.xxxx-x">
+               <tooltip><Tooltip text="Inscrição Estadual" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtInscMunicipal" layoutX="376.0" layoutY="110.0" prefHeight="26.0" prefWidth="153.0" promptText="xx.xx.xxx.xxxx.xxx">
+               <tooltip><Tooltip text="Inscrição Municipal" /></tooltip>
+            </TextField>
+            <DatePicker fx:id="dpClienteDesde" layoutX="635.0" layoutY="110.0" prefHeight="26.0" prefWidth="153.0" promptText="xx/xx/xxxx">
+               <tooltip><Tooltip text="Cliente desde" /></tooltip>
+            </DatePicker>
+            <TextField fx:id="txtTelefone1" layoutX="120.0" layoutY="150.0" prefHeight="26.0" prefWidth="139.0" promptText="(xx) xxxx-xxxx">
+               <tooltip><Tooltip text="Telefone" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtTelefone2" layoutX="376.0" layoutY="150.0" prefHeight="26.0" prefWidth="153.0" promptText="(xx) xxxxx-xxxx">
+               <tooltip><Tooltip text="Telefone" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtFax" layoutX="635.0" layoutY="150.0" prefHeight="26.0" prefWidth="153.0" promptText="xx xxxx-xxxx">
+               <tooltip><Tooltip text="Fax" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtCEP" layoutX="120.0" layoutY="192.0" prefHeight="26.0" prefWidth="94.0" promptText="xxxxx-xxx">
+               <tooltip><Tooltip text="CEP" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtRua" layoutX="297.0" layoutY="192.0" prefHeight="26.0" prefWidth="276.0">
+               <tooltip><Tooltip text="Nome da Rua" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtNumero" layoutX="674.0" layoutY="192.0" prefHeight="26.0" prefWidth="114.0">
+               <tooltip><Tooltip text="Número" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtBairro" layoutX="120.0" layoutY="236.0" prefHeight="26.0" prefWidth="139.0" promptText="Bairro">
+               <tooltip><Tooltip text="Bairro" /></tooltip>
+            </TextField>
+            <ComboBox fx:id="cbEstado" layoutX="297.0" layoutY="236.0" prefHeight="26.0" prefWidth="64.0" />
+            <TextField fx:id="txtCidade" layoutX="424.0" layoutY="236.0" prefHeight="26.0" prefWidth="149.0">
+               <tooltip><Tooltip text="Cidade" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtReferencia" layoutX="674.0" layoutY="236.0" prefHeight="26.0" prefWidth="114.0">
+               <tooltip><Tooltip text="Ponto de Referência" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtConta" layoutX="120.0" layoutY="280.0" prefHeight="26.0" prefWidth="99.0">
+               <tooltip><Tooltip text="Número da Conta" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtAgencia" layoutX="297.0" layoutY="280.0" prefHeight="26.0" prefWidth="64.0">
+               <tooltip><Tooltip text="Número da Agência" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtNumeroBanco" layoutX="673.0" layoutY="280.0" prefHeight="26.0" prefWidth="114.0" promptText="xxx">
+               <tooltip><Tooltip text="Número do Banco" /></tooltip>
+            </TextField>
+            <TextField fx:id="txtNomeBanco" layoutX="424.0" layoutY="280.0" prefHeight="26.0" prefWidth="149.0">
+               <tooltip><Tooltip text="Nome do Banco" /></tooltip>
+            </TextField>
+            <Label layoutX="27.0" layoutY="30.0" text="Razão Social:" />
+            <Label layoutX="12.0" layoutY="71.0" text="Nome Fantasia:" />
+            <Label layoutX="564.0" layoutY="30.0" text="CNPJ/CPF:" />
+            <Label layoutX="570.0" layoutY="71.0" text="ID Corp.:" />
+            <Label layoutX="20.0" layoutY="115.0" text="Insc. Estadual:" />
+            <Label layoutX="268.0" layoutY="115.0" text="Insc. Municipal:" />
+            <Label layoutX="534.0" layoutY="115.0" text="Cliente desde:" />
+            <Label layoutX="39.0" layoutY="155.0" text="Tefelefone:" />
+            <Label layoutX="295.0" layoutY="155.0" text="Tefelefone:" />
+            <Label layoutX="600.0" layoutY="155.0" text="Fax:" />
+            <Label layoutX="83.0" layoutY="197.0" text="CEP:" />
+            <Label layoutX="224.0" layoutY="197.0" text="Endereço:" />
+            <Label layoutX="610.0" layoutY="197.0" text="Número:" />
+            <Label layoutX="69.0" layoutY="241.0" text="Bairro:" />
+            <Label layoutX="268.0" layoutY="241.0" text="UF:" />
+            <Label layoutX="368.0" layoutY="241.0" text="Cidade:" />
+            <Label layoutX="592.0" layoutY="241.0" text="Referência:" />
+            <Label layoutX="372.0" layoutY="285.0" text="Banco:" />
+            <Label layoutX="582.0" layoutY="285.0" text="Núm. Banco:" />
+            <Label layoutX="70.0" layoutY="285.0" text="Conta:" />
+            <Label layoutX="234.0" layoutY="285.0" text="Agência:" />
+         </children></AnchorPane>
+      <AnchorPane layoutY="131.0" minHeight="-Infinity" prefHeight="210.0" prefWidth="759.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="360.0">
+         <children>
+            <TableView fx:id="tableContacts" layoutX="15.0" layoutY="29.0" onMouseClicked="#editContact" prefHeight="140.0" prefWidth="771.0">
+               <columns>
+                 <TableColumn fx:id="cNome" prefWidth="265" text="Nome" />
+                 <TableColumn fx:id="cCargo" prefWidth="150" text="Cargo" />
+                 <TableColumn fx:id="cEmail" prefWidth="200" text="E-mail" />
+                 <TableColumn fx:id="cTelefone" prefWidth="150" text="Telefone" />
+              </columns>
+               <tooltip><Tooltip text="Duplo clique para editar um contato" /></tooltip>
+            </TableView>
+            <Button fx:id="btnAdicionarContato" layoutX="705.0" layoutY="176.0" mnemonicParsing="false" onAction="#addNewContact" prefHeight="30.0" prefWidth="80.0" text="Adicionar" />
+            <Label layoutX="16.0" layoutY="4.0" text="Contatos:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutY="331.0" prefHeight="208.0" prefWidth="759.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="570.0">
+         <children>
+            <TableView fx:id="tableHistory" layoutX="14.0" layoutY="24.0" onMouseClicked="#editHistory" prefHeight="140.0" prefWidth="771.0">
+               <columns>
+                 <TableColumn fx:id="cData" prefWidth="105.0" text="Data" />
+                 <TableColumn fx:id="cResumo" prefWidth="664.0" text="Resumo" />
+              </columns>
+               <tooltip><Tooltip text="Duplo clique para editar um histórico" /></tooltip>
+            </TableView>
+            <Button fx:id="btnAdicionarHistorico" layoutX="705.0" layoutY="171.0" mnemonicParsing="false" onAction="#addNewHistory" prefHeight="30.0" prefWidth="80.0" text="Adicionar" />
+            <Label layoutX="15.0" text="Histórico:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+         </children></AnchorPane>
+      <CheckBox fx:id="ckProspeccao" layoutX="549.0" layoutY="331.0" mnemonicParsing="false" text="Prospecção">
+         <tooltip>
+            <Tooltip text="Prospecção" />
+         </tooltip>
+      </CheckBox>
+      <CheckBox fx:id="ckAtivo" layoutX="666.0" layoutY="331.0" mnemonicParsing="false" selected="true" text="Cadastro Ativo" />
+   </children>
+</AnchorPane>

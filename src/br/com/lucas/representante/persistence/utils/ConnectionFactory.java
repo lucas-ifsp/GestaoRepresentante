@@ -10,13 +10,17 @@ public class ConnectionFactory implements AutoCloseable{
 
     public static Connection createConnection() {
         try {
-            if(connection == null)
-                connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+            instantiateConnectionIfNull();
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    private static void instantiateConnectionIfNull() throws SQLException {
+        if(connection == null)
+            connection = DriverManager.getConnection("jdbc:sqlite:database.db");
     }
 
     public static PreparedStatement createPreparedStatement(String sql) {
@@ -41,12 +45,19 @@ public class ConnectionFactory implements AutoCloseable{
 
     @Override
     public void close() throws Exception {
-            if(connection != null){
-                connection.close();
-                if(preparedStatement != null)
-                    preparedStatement.close();
-                if(statement != null)
-                    statement.close();
-        }
+        closeStatementsIfNotNull();
+        closeConnectionIfNotNull();
+    }
+
+    private void closeConnectionIfNotNull() throws SQLException {
+        if(connection != null)
+            connection.close();
+    }
+
+    private void closeStatementsIfNotNull() throws SQLException {
+        if(preparedStatement != null)
+            preparedStatement.close();
+        if(statement != null)
+            statement.close();
     }
 }

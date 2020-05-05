@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="232.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowContact">
+   <children>
+      <Button fx:id="btnSalvar" layoutX="555.0" layoutY="183.0" mnemonicParsing="false" onAction="#saveEntityOrNotifyErrors" prefHeight="35.0" prefWidth="80.0" text="Salvar" />
+      <Button fx:id="btnCancelar" layoutX="455.0" layoutY="183.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="80.0" text="Cancelar" />
+      <Button fx:id="btnExcluir" layoutX="14.0" layoutY="183.0" mnemonicParsing="false" onAction="#delete" prefHeight="35.0" prefWidth="80.0" text="Excluir" visible="false" />
+      <TextField fx:id="txtNome" layoutX="64.0" layoutY="23.0" prefHeight="26.0" prefWidth="369.0">
+         <tooltip><Tooltip text="Nome do Contato" /></tooltip>
+      </TextField>
+      <TextField fx:id="txtCargo" layoutX="496.0" layoutY="23.0" prefHeight="26.0" prefWidth="138.0">
+         <tooltip><Tooltip text="Cargo" /></tooltip>
+      </TextField>
+      <TextField fx:id="txtRG" layoutX="64.0" layoutY="64.0" prefHeight="26.0" prefWidth="146.0" promptText="xx.xxx.xxx-x">
+         <tooltip><Tooltip text="RG" /></tooltip>
+      </TextField>
+      <TextField fx:id="txtCPF" layoutX="256.0" layoutY="64.0" prefHeight="26.0" prefWidth="146.0" promptText="xxx.xxx.xxx-xx">
+         <tooltip><Tooltip text="CPF" /></tooltip>
+      </TextField>
+      <DatePicker fx:id="dpAniversario" layoutX="496.0" layoutY="64.0" prefHeight="26.0" prefWidth="138.0" promptText="xx/xx/xxxx">
+         <tooltip><Tooltip text="Aniversário" /></tooltip>
+      </DatePicker>
+      <TextField fx:id="txtEmail" layoutX="64.0" layoutY="106.0" prefHeight="26.0" prefWidth="340.0" promptText="Campo Obrigatório">
+         <tooltip><Tooltip text="E-mail" /></tooltip>
+      </TextField>
+      <TextField fx:id="txtTelefone" layoutX="496.0" layoutY="106.0" prefHeight="26.0" prefWidth="138.0" promptText="(xx) xxxx-xxxx">
+         <tooltip><Tooltip text="Telefone" /></tooltip>
+      </TextField>
+      <Label layoutX="17.0" layoutY="28.0" text="Nome:" />
+      <Label layoutX="35.0" layoutY="69.0" text="RG:" />
+      <Label layoutX="222.0" layoutY="69.0" text="CPF:" />
+      <Label layoutX="449.0" layoutY="28.0" text="Cargo:" />
+      <Label layoutX="14.0" layoutY="111.0" text="E-mail:" />
+      <Label layoutX="414.0" layoutY="69.0" text="Aniversário:" />
+      <Label layoutX="431.0" layoutY="111.0" text="Telefone:" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" right="10.0" top="5.0" />
+   </padding>
+</AnchorPane>

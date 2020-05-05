@@ -1,9 +1,8 @@
 package br.com.lucas.representante.persistence.dao;
 
-import br.com.lucas.representante.model.BankAccount;
+import br.com.lucas.representante.model.entities.BankAccount;
 import br.com.lucas.representante.persistence.utils.AbstractTemplateSqlDAO;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,23 +13,23 @@ public class DAOBankAccount extends AbstractTemplateSqlDAO<BankAccount, String> 
     @Override
     protected String createSaveSql() {
         return "INSERT INTO BankAccount(bankName, bankNumber, agency, " +
-                "account, clientCnpjOrCpf) VALUES(?, ?, ?, ?, ?)";
+                "account, client) VALUES(?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
         return "UPDATE BankAccount SET bankName = ?, bankNumber = ?, " +
-                "agency = ?, account = ? WHERE clientCnpjOrCpf = ?";
+                "agency = ?, account = ? WHERE client = ?";
     }
 
     @Override
     protected String createDeleteSql() {
-        return "DELETE FROM BankAccount WHERE clientCnpjOrCpf = ?";
+        return "DELETE FROM BankAccount WHERE client = ?";
     }
 
     @Override
-    protected String createSelectSql(@Nullable String condition) {
-        return "SELECT * FROM BankAccount WHERE clientCnpjOrCpf = ?";
+    protected String createSelectSql() {
+        return "SELECT * FROM BankAccount WHERE client = ?";
     }
 
     @Override
@@ -39,11 +38,16 @@ public class DAOBankAccount extends AbstractTemplateSqlDAO<BankAccount, String> 
     }
 
     @Override
+    protected String createSelectBySql(String field) {
+        return "SELECT * FROM BankAccount WHERE "+ field +" = ?";
+    }
+
+    @Override
     protected void setEntityToPreparedStatement(@NotNull BankAccount entity, @NotNull PreparedStatement stmt) throws SQLException {
         stmt.setString(1, entity.getBankName());
-        stmt.setInt(2, entity.getBankNumber());
-        stmt.setInt(3, entity.getAgency());
-        stmt.setInt(4, entity.getAccount());
+        stmt.setString(2, entity.getBankNumber());
+        stmt.setString(3, entity.getAgency());
+        stmt.setString(4, entity.getAccount());
         stmt.setString(5, entity.getOwner().getCnpjOrCpf());
     }
 
@@ -53,12 +57,22 @@ public class DAOBankAccount extends AbstractTemplateSqlDAO<BankAccount, String> 
     }
 
     @Override
+    protected void setFilterToPreparedStatement(@NotNull Object filter, @NotNull PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, filter.toString());
+    }
+
+    @Override
     protected BankAccount getEntityFromResultSet(@NotNull ResultSet rs) throws SQLException {
         BankAccount account = new BankAccount(
                 rs.getString("bankName"),
-                rs.getInt("bankNumber"),
-                rs.getInt("agency"),
-                rs.getInt("clientCnpjOrCpf"));
+                rs.getString("bankNumber"),
+                rs.getString("agency"),
+                rs.getString("account"));
         return account;
+    }
+
+    @Override
+    protected String getEntityKey(@NotNull BankAccount entity) {
+        return entity.getOwner().getCnpjOrCpf();
     }
 }

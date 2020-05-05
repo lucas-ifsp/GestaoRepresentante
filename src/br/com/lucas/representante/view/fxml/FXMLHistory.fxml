@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="265.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowHistory">
+   <children>
+      <Button fx:id="btnSalvar" layoutX="506.0" layoutY="216.0" mnemonicParsing="false" onAction="#saveEntityOrNotifyErrors" prefHeight="35.0" prefWidth="80.0" text="Salvar" />
+      <Button fx:id="btnCancelar" layoutX="405.0" layoutY="216.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="80.0" text="Cancelar" />
+      <Button fx:id="btnExcluir" layoutX="14.0" layoutY="216.0" mnemonicParsing="false" onAction="#delete" prefHeight="35.0" prefWidth="80.0" text="Excluir" visible="false" />
+      <Label layoutX="14.0" layoutY="26.0" text="Resumo:" />
+      <Label layoutX="410.0" layoutY="26.0" text="Data:" />
+      <Label layoutX="14.0" layoutY="64.0" text="Descrição:" />
+      <TextField fx:id="txtTitulo" layoutX="81.0" layoutY="21.0" prefHeight="26.0" prefWidth="317.0" />
+      <DatePicker fx:id="dpData" layoutX="456.0" layoutY="21.0" prefHeight="26.0" prefWidth="130.0" />
+      <TextArea fx:id="txaDescricao" layoutX="14.0" layoutY="90.0" prefHeight="108.0" prefWidth="571.0" wrapText="true" />
+   </children>
+</AnchorPane>
