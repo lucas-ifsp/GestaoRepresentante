@@ -107,7 +107,7 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
 
     @Override
     protected void loadNestedEntitiesHook(List<Client> entities) throws SQLException{
-        entities.stream().forEach((x) -> {
+        entities.forEach((x) -> {
                 selectAndBindAddress(x);
                 selectAndBindAccount(x);
                 selectAndBindContacts(x);
@@ -130,12 +130,12 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
     private void selectAndBindContacts(Client client) {
         DAO<Contact, String> daoContact = new DAOContact();
         List<Contact> contacts = daoContact.selectBy("client", client.getCnpjOrCpf());
-        contacts.stream().forEach(c -> client.addContact(c));
+        contacts.forEach(c -> client.addContact(c));
     }
 
     private void selectAndBindHistory(Client client) {
         DAO<History, Integer> daoHistory = new DAOHistory();
         List<History> history = daoHistory.selectBy("client", client.getCnpjOrCpf());
-        history.stream().forEach(h -> client.addHistory(h));
+        history.forEach(h -> client.addHistory(h));
     }
 }

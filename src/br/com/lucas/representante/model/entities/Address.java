@@ -21,6 +21,12 @@ public class Address {
         this.pointOfReference = pointOfReference;
     }
 
+    public boolean matchesSearchString(String substring){
+        String cityLowerCase = city.toLowerCase();
+        String subStringLowerCase = substring.toLowerCase();
+        return cityLowerCase.contains(subStringLowerCase);
+    }
+
     @Override
     public String toString() {
         return "Address{" +
@@ -99,4 +105,6 @@ public class Address {
     public void setResident(Client resident) {
         this.resident = resident;
     }
+
+
 }

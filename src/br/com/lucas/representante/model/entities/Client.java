@@ -61,14 +61,16 @@ public class Client {
             this.address.setResident(this);
     }
 
-    public boolean matchesSearchName(String substring){
+    public boolean matchesSearchString(String substring){
         String tradeNameLowerCase = tradeName.toLowerCase();
         String companyNameLowerCase = companyName.toLowerCase();
         String subStringLowerCase = substring.toLowerCase();
 
         boolean isContainedInTradeName = tradeNameLowerCase.contains(subStringLowerCase);
         boolean isContainedInCompanyName = companyNameLowerCase.contains(subStringLowerCase);
-        return isContainedInCompanyName || isContainedInTradeName;
+        boolean isContainedInCityName = address == null? false : address.matchesSearchString(substring);
+
+        return isContainedInCompanyName || isContainedInTradeName || isContainedInCityName;
     }
 
     public boolean matchesSearchByInactive(boolean inactive){
@@ -126,7 +128,7 @@ public class Client {
 
     private int getHistoryIndex(@NotNull History h) {
         for (History ht : history) {
-            if(ht == h)
+            if(ht.getId() == h.getId())
                 return history.indexOf(ht);
         }
         return -1;
@@ -286,6 +288,14 @@ public class Client {
         this.prospection = prospection;
     }
 
+    public List<Contact> getContacts() {
+        return new ArrayList<>(contacts);
+    }
+
+    public List<History> getHistory() {
+        return new ArrayList<>(history);
+    }
+
     public String getState(){
         String typeStatus = prospection? "Prospecção" : "Cliente";
         String activityStatus = "";
@@ -294,11 +304,7 @@ public class Client {
         return typeStatus + " " + activityStatus;
     }
 
-    public List<Contact> getContacts() {
-        return new ArrayList<>(contacts);
-    }
-
-    public List<History> getHistory() {
-        return new ArrayList<>(history);
+    public String getCity(){
+        return address == null? "" : address.getCity();
     }
 }

@@ -34,7 +34,7 @@ public class WindowClient {
 
             stage.setTitle("Dados do Cliente");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(pane, 800, 840));
+            stage.setScene(new Scene(pane, 940, 750));
             stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException e) {

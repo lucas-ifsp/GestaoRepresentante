@@ -73,7 +73,7 @@ public class CtrlWindowHistory {
     }
 
     private boolean isUpdateRequest() {
-        return historyToSet != null && historyToSet.getId() != -1;
+        return historyToSet != null;
     }
 
     private void closeStage() {

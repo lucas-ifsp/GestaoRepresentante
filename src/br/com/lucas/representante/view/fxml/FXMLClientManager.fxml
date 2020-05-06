@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="605.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowClientManager">
+
+<AnchorPane prefHeight="605.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowClientManager">
    <children>
       <AnchorPane prefHeight="80.0" prefWidth="792.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -36,13 +37,14 @@
          <children>
             <TableView fx:id="tableClientes" onMouseClicked="#editClient" prefHeight="438.0" prefWidth="752.0" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
               <columns>
-                <TableColumn fx:id="cNome" editable="false" prefWidth="300" text="Nome" />
-                <TableColumn fx:id="cFantasia" editable="false" prefWidth="250" text="Nome Fantasia" />
-                <TableColumn fx:id="cID" editable="false" prefWidth="150" text="ID Companhia" />
+                <TableColumn fx:id="cNome" editable="false" prefWidth="270" text="Nome" />
+                <TableColumn fx:id="cFantasia" editable="false" prefWidth="220" text="Nome Fantasia" />
+                <TableColumn fx:id="cID" editable="false" prefWidth="90" text="ID Comp." />
+                <TableColumn fx:id="cCidade" editable="false" prefWidth="140" text="Cidade" />
                 <TableColumn fx:id="cCnjpCpf" editable="false" prefWidth="150" text="CPNJ/CPF" />
                 <TableColumn fx:id="cTelefone1" editable="false" prefWidth="120" text="Telefone" />
                 <TableColumn fx:id="cTelefone2" editable="false" prefWidth="120" text="Telefone" />
-                <TableColumn fx:id="cTipo" editable="false" prefWidth="150" text="Tipo" />
+                <TableColumn fx:id="cTipo" editable="false" prefWidth="135" text="Tipo" />
               </columns>
                <tooltip><Tooltip text="Duplo clique para editar um cliente" /></tooltip>
             </TableView>

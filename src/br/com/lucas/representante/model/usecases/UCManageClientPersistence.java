@@ -44,14 +44,14 @@ public class UCManageClientPersistence {
     }
 
     private void deleteRemovedContacts(List<Contact> contactsToUpdate, List<Contact> contactsInDatabase) {
-        contactsInDatabase.stream().forEach(c-> {
+        contactsInDatabase.forEach(c-> {
             if(!contactsToUpdate.contains(c))
                 ucManageContactPersistence.delete(c);
         });
     }
 
     private void updateExistingContacts(List<Contact> contactsToUpdate) {
-        contactsToUpdate.stream().forEach(c -> ucManageContactPersistence.saveOrUpdate(c));
+        contactsToUpdate.forEach(c -> ucManageContactPersistence.saveOrUpdate(c));
     }
 
     private void updateHistoryList(Client client) {
@@ -63,14 +63,14 @@ public class UCManageClientPersistence {
     }
 
     private void deleteRemovedHistory(List<History> historyToUpdate, List<History> historyInDatabase) {
-        historyInDatabase.stream().forEach(h-> {
+        historyInDatabase.forEach(h-> {
             if(!historyToUpdate.contains(h))
                 ucManageHistoryPersistence.delete(h);
         });
     }
 
     private void updateExistingHistory(List<History> historyToUpdate) {
-        historyToUpdate.stream().forEach(h -> ucManageHistoryPersistence.saveOrUpdate(h));
+        historyToUpdate.forEach(h -> ucManageHistoryPersistence.saveOrUpdate(h));
     }
 
     public void delete(Client client){
@@ -78,10 +78,10 @@ public class UCManageClientPersistence {
         ucManageBankAccountPersistence.delete(client.getAccount());
 
         List<Contact> contactsToDelete = ucManageContactPersistence.selectAllFromClient(client);
-        contactsToDelete.stream().forEach(c->ucManageContactPersistence.delete(c));
+        contactsToDelete.forEach(c->ucManageContactPersistence.delete(c));
 
         List<History> historyToDelete = ucManageHistoryPersistence.selectAllFromClient(client);
-        historyToDelete.stream().forEach(c->ucManageHistoryPersistence.delete(c));
+        historyToDelete.forEach(c->ucManageHistoryPersistence.delete(c));
         
         daoClient.delete(client.getCnpjOrCpf());
     }

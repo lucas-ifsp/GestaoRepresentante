@@ -17,8 +17,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CtrlWindowClient {
 
@@ -186,7 +188,10 @@ public class CtrlWindowClient {
 
     private void refreshHistoryTableData() {
         List<History> history = client.getHistory();
-        tableHistoryData.setAll(history);
+        List<History> historySortedByDate = history.stream().
+                sorted(Comparator.comparing(History::getDate).reversed()).
+                collect(Collectors.toList());
+        tableHistoryData.setAll(historySortedByDate);
     }
 
     public void editHistory(MouseEvent event) {

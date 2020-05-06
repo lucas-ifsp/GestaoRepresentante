@@ -9,11 +9,13 @@ public class History {
     private String title;
     private String description;
     private LocalDate date;
+    private static int transientId;
 
     private Client client;
 
     public History(String title, String description, LocalDate date) {
-        this(-1,title, description, date);
+
+        this(getNextTransientID(),title, description, date);
     }
 
     public History(int id, String title, String description, LocalDate date) {
@@ -94,5 +96,9 @@ public class History {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    private static int getNextTransientID(){
+        return --transientId;
     }
 }

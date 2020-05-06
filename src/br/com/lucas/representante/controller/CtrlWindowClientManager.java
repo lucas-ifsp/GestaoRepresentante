@@ -22,6 +22,7 @@ public class CtrlWindowClientManager {
     @FXML TableColumn<Client, String> cNome;
     @FXML TableColumn<Client, String> cFantasia;
     @FXML TableColumn<Client, String> cID;
+    @FXML TableColumn<Client, String> cCidade;
     @FXML TableColumn<Client, String> cCnjpCpf;
     @FXML TableColumn<Client, String> cTelefone1;
     @FXML TableColumn<Client, String> cTelefone2;
@@ -61,6 +62,7 @@ public class CtrlWindowClientManager {
         cNome.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         cFantasia.setCellValueFactory(new PropertyValueFactory<>("tradeName"));
         cID.setCellValueFactory(new PropertyValueFactory<>("companyId"));
+        cCidade.setCellValueFactory(new PropertyValueFactory<>("city"));
         cCnjpCpf.setCellValueFactory(new PropertyValueFactory<>("cnpjOrCpf"));
         cTelefone1.setCellValueFactory(new PropertyValueFactory<>("phone1"));
         cTelefone2.setCellValueFactory(new PropertyValueFactory<>("phone2"));
@@ -113,7 +115,7 @@ public class CtrlWindowClientManager {
         if(substringIsNotEmpty())
             filteredClients = filteredClients.
                     parallelStream().
-                    filter(c -> c.matchesSearchName(filter)).
+                    filter(c -> c.matchesSearchString(filter)).
                     collect(Collectors.toList());
     }
 
