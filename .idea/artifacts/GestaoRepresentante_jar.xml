@@ -1,0 +1,38 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GestaoRepresentante:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GestaoRepresentante_jar</output-path>
+    <root id="archive" name="GestaoRepresentante.jar">
+      <element id="module-output" name="GestaoRepresentante" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/src.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PATH_FX$/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/sqlite-jdbc-3.27.2.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PATH_FX$/libavplugin-54.so" />
+      <element id="file-copy" path="$PATH_FX$/libavplugin-56.so" />
+      <element id="file-copy" path="$PATH_FX$/libavplugin-57.so" />
+      <element id="file-copy" path="$PATH_FX$/libavplugin-ffmpeg-56.so" />
+      <element id="file-copy" path="$PATH_FX$/libavplugin-ffmpeg-57.so" />
+      <element id="file-copy" path="$PATH_FX$/libdecora_sse.so" />
+      <element id="file-copy" path="$PATH_FX$/libfxplugins.so" />
+      <element id="file-copy" path="$PATH_FX$/libglass.so" />
+      <element id="file-copy" path="$PATH_FX$/libglassgtk2.so" />
+      <element id="file-copy" path="$PATH_FX$/libglassgtk3.so" />
+      <element id="file-copy" path="$PATH_FX$/libgstreamer-lite.so" />
+      <element id="file-copy" path="$PATH_FX$/libjavafx_font.so" />
+      <element id="file-copy" path="$PATH_FX$/libjavafx_font_freetype.so" />
+      <element id="file-copy" path="$PATH_FX$/libjavafx_font_pango.so" />
+      <element id="file-copy" path="$PATH_FX$/libjavafx_iio.so" />
+      <element id="file-copy" path="$PATH_FX$/libjfxmedia.so" />
+      <element id="file-copy" path="$PATH_FX$/libjfxwebkit.so" />
+      <element id="file-copy" path="$PATH_FX$/libprism_common.so" />
+      <element id="file-copy" path="$PATH_FX$/libprism_es2.so" />
+      <element id="file-copy" path="$PATH_FX$/libprism_sw.so" />
+    </root>
+  </artifact>
+</component>
