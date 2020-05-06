@@ -4,15 +4,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="839.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowClient">
+<AnchorPane prefHeight="748.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.lucas.representante.controller.CtrlWindowClient">
    <children>
-      <AnchorPane layoutY="715.0" prefHeight="60.0" prefWidth="943.0" AnchorPane.bottomAnchor="0.0">
+      <AnchorPane layoutY="692.0" prefHeight="50.0" prefWidth="943.0" AnchorPane.bottomAnchor="0.0">
          <children>
-            <Button fx:id="btnSalvar" layoutX="845.0" layoutY="13.0" mnemonicParsing="false" onAction="#saveOrUpdateClient" prefHeight="35.0" prefWidth="80.0" text="Salvar" />
-            <Button fx:id="btnCancelar" layoutX="746.0" layoutY="13.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="80.0" text="Cancelar" />
-            <Button fx:id="btnExcluir" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#deleteClient" prefHeight="35.0" prefWidth="80.0" text="Excluir" visible="false" />
+            <Button fx:id="btnSalvar" layoutX="845.0" layoutY="3.0" mnemonicParsing="false" onAction="#saveOrUpdateClient" prefHeight="35.0" prefWidth="80.0" text="Salvar" />
+            <Button fx:id="btnCancelar" layoutX="746.0" layoutY="3.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="80.0" text="Cancelar" />
+            <Button fx:id="btnExcluir" layoutX="14.0" layoutY="3.0" mnemonicParsing="false" onAction="#deleteClient" prefHeight="35.0" prefWidth="80.0" text="Excluir" visible="false" />
          </children></AnchorPane>
-      <AnchorPane minHeight="-Infinity" prefHeight="320.0" prefWidth="787.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+      <AnchorPane minHeight="-Infinity" prefHeight="320.0" prefWidth="787.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="txtNome" layoutX="120.0" layoutY="16.0" prefHeight="26.0" prefWidth="418.0">
                <tooltip><Tooltip text="Razão Social" /></tooltip>
@@ -58,7 +58,7 @@
             <TextField fx:id="txtBairro" layoutX="120.0" layoutY="231.0" prefHeight="26.0" prefWidth="139.0" promptText="Bairro">
                <tooltip><Tooltip text="Bairro" /></tooltip>
             </TextField>
-            <ComboBox fx:id="cbEstado" layoutX="301.0" layoutY="231.0" prefHeight="26.0" prefWidth="57.0" />
+            <ComboBox fx:id="cbEstado" layoutX="301.0" layoutY="231.0" prefHeight="26.0" prefWidth="71.0" />
             <TextField fx:id="txtCidade" layoutX="437.0" layoutY="231.0" prefHeight="26.0" prefWidth="268.0">
                <tooltip><Tooltip text="Cidade" /></tooltip>
             </TextField>
@@ -91,21 +91,21 @@
             <Label layoutX="228.0" layoutY="192.0" text="Endereço:" />
             <Label layoutX="742.0" layoutY="192.0" text="Número:" />
             <Label layoutX="69.0" layoutY="236.0" text="Bairro:" />
-            <Label layoutX="272.0" layoutY="236.0" text="UF:" />
-            <Label layoutX="378.0" layoutY="236.0" text="Cidade:" />
+            <Label layoutX="270.0" layoutY="236.0" text="UF:" />
+            <Label layoutX="380.0" layoutY="236.0" text="Cidade:" />
             <Label layoutX="724.0" layoutY="236.0" text="Referência:" />
             <Label layoutX="566.0" layoutY="280.0" text="Banco:" />
             <Label layoutX="772.0" layoutY="280.0" text="Núm. Banco:" />
             <Label layoutX="70.0" layoutY="280.0" text="Conta:" />
-            <Label layoutX="375.0" layoutY="280.0" text="Agência:" />
+            <Label layoutX="373.0" layoutY="280.0" text="Agência:" />
          </children></AnchorPane>
-      <AnchorPane layoutY="330.0" minHeight="-Infinity" prefHeight="197.0" prefWidth="806.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0">
+      <AnchorPane layoutY="316.0" minHeight="-Infinity" prefHeight="197.0" prefWidth="806.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="310.0">
          <children>
             <TableView fx:id="tableContacts" layoutX="15.0" layoutY="30.0" onMouseClicked="#editContact" prefHeight="120.0" prefWidth="913.0">
                <columns>
-                 <TableColumn fx:id="cNome" prefWidth="265" text="Nome" />
-                 <TableColumn fx:id="cCargo" prefWidth="150" text="Cargo" />
-                 <TableColumn fx:id="cEmail" prefWidth="200" text="E-mail" />
+                 <TableColumn fx:id="cNome" prefWidth="300" text="Nome" />
+                 <TableColumn fx:id="cCargo" prefWidth="250" text="Cargo" />
+                 <TableColumn fx:id="cEmail" prefWidth="211" text="E-mail" />
                  <TableColumn fx:id="cTelefone" prefWidth="150" text="Telefone" />
               </columns>
                <tooltip><Tooltip text="Duplo clique para editar um contato" /></tooltip>
@@ -117,16 +117,16 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <AnchorPane layoutY="514.0" prefHeight="210.0" prefWidth="806.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="500.0">
+      <AnchorPane layoutY="514.0" prefHeight="170.0" prefWidth="943.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="490.0">
          <children>
-            <TableView fx:id="tableHistory" layoutX="14.0" layoutY="24.0" onMouseClicked="#editHistory" prefHeight="120.0" prefWidth="913.0">
+            <TableView fx:id="tableHistory" layoutX="14.0" layoutY="24.0" minHeight="80.0" onMouseClicked="#editHistory" prefHeight="120.0" prefWidth="913.0" AnchorPane.bottomAnchor="54.0" AnchorPane.topAnchor="24.0">
                <columns>
                  <TableColumn fx:id="cData" prefWidth="105.0" text="Data" />
-                 <TableColumn fx:id="cResumo" prefWidth="664.0" text="Resumo" />
+                 <TableColumn fx:id="cResumo" prefWidth="807.0" text="Resumo" />
               </columns>
                <tooltip><Tooltip text="Duplo clique para editar um histórico" /></tooltip>
             </TableView>
-            <Button fx:id="btnAdicionarHistorico" layoutX="846.0" layoutY="154.0" mnemonicParsing="false" onAction="#addNewHistory" prefHeight="30.0" prefWidth="80.0" text="Adicionar" />
+            <Button fx:id="btnAdicionarHistorico" layoutX="846.0" layoutY="154.0" mnemonicParsing="false" onAction="#addNewHistory" prefHeight="30.0" prefWidth="80.0" text="Adicionar" AnchorPane.bottomAnchor="14.0" />
             <Label layoutX="15.0" layoutY="-2.0" text="Histórico:">
                <font>
                   <Font name="System Bold" size="13.0" />
