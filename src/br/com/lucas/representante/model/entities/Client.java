@@ -162,6 +162,18 @@ public class Client {
                 ", tradeName='" + tradeName + '\'' +
                 ", companyId='" + companyId + '\'' +
                 ", cnpjOrCpf='" + cnpjOrCpf + '\'' +
+                ", stateRegistration='" + stateRegistration + '\'' +
+                ", cityRegistration='" + cityRegistration + '\'' +
+                ", clientSince=" + clientSince +
+                ", phone1='" + phone1 + '\'' +
+                ", phone2='" + phone2 + '\'' +
+                ", fax='" + fax + '\'' +
+                ", active=" + active +
+                ", prospection=" + prospection +
+                ", account=" + account +
+                ", address=" + address +
+                ", contacts=" + contacts +
+                ", history=" + history +
                 '}';
     }
 

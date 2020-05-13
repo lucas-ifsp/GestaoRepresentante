@@ -36,7 +36,7 @@ public class WindowContact {
 
             stage.setTitle("Dados do Contato");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(pane, 650, 230));
+            stage.setScene(new Scene(pane, 660, 230));
             stage.setResizable(false);
             stage.showAndWait();
 

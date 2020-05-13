@@ -14,13 +14,13 @@ public class DAOContact extends AbstractTemplateSqlDAO<Contact, String> {
     @Override
     protected String createSaveSql() {
         return "INSERT INTO Contact(name, position, phone, cpf, " +
-                "rg, birthday, client, email) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                "rg, birthday, email) VALUES(?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
         return "UPDATE Contact SET name = ?, position = ?, phone = ?, cpf = ?, " +
-                "rg = ?, birthday = ?, client = ? WHERE email = ?";
+                "rg = ?, birthday = ? WHERE email = ?";
     }
 
     @Override
@@ -52,13 +52,12 @@ public class DAOContact extends AbstractTemplateSqlDAO<Contact, String> {
         stmt.setString(4, entity.getCpf());
         stmt.setString(5, entity.getRg());
         stmt.setString(6, birthday != null? birthday.toString(): null);
-        stmt.setString(7, entity.getCompany().getCnpjOrCpf());
-        stmt.setString(8, entity.getEmail());
+        stmt.setString(7, entity.getEmail().toLowerCase());
     }
 
     @Override
     protected void setKeyToPreparedStatement(@NotNull String key, @NotNull PreparedStatement stmt) throws SQLException {
-        stmt.setString(1, key);
+        stmt.setString(1, key.toLowerCase());
     }
 
     @Override

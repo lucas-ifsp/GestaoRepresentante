@@ -2,6 +2,7 @@ package br.com.lucas.representante.persistence.dao;
 
 import br.com.lucas.representante.model.entities.*;
 import br.com.lucas.representante.persistence.utils.AbstractTemplateSqlDAO;
+import br.com.lucas.representante.persistence.utils.ConnectionFactory;
 import br.com.lucas.representante.persistence.utils.DAO;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,8 +112,8 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
         entities.forEach((x) -> {
                 selectAndBindAddress(x);
                 selectAndBindAccount(x);
-                selectAndBindContacts(x);
                 selectAndBindHistory(x);
+                selectAndBindContacts(x);
         });
      }
 
@@ -127,15 +129,90 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
         account.ifPresent(a -> client.setAccount(a));
     }
 
-    private void selectAndBindContacts(Client client) {
-        DAO<Contact, String> daoContact = new DAOContact();
-        List<Contact> contacts = daoContact.selectBy("client", client.getCnpjOrCpf());
-        contacts.forEach(c -> client.addContact(c));
-    }
-
     private void selectAndBindHistory(Client client) {
         DAO<History, Integer> daoHistory = new DAOHistory();
         List<History> history = daoHistory.selectBy("client", client.getCnpjOrCpf());
         history.forEach(h -> client.addHistory(h));
+    }
+
+    private void selectAndBindContacts(Client client) {
+        List<Contact> contacts = selectClientContacts(client);
+        contacts.forEach(c -> client.addContact(c));
+    }
+
+    public List<Contact> selectClientContacts(Client client){
+        List<Contact> contacts = new ArrayList<>();
+        String sql = "SELECT contact FROM ClientContacts WHERE client = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            List<String> contactsKeys = selectContactsKeys(client.getCnpjOrCpf(), stmt);
+            contacts = selectContacts(contactsKeys);
+            contacts.forEach(contact -> contact.setCompany(client));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contacts;
+    }
+
+    @NotNull
+    private List<String> selectContactsKeys(String cpfCnpj, PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, cpfCnpj);
+        ResultSet rs  = stmt.executeQuery();
+        List<String> contactsKeys = new ArrayList<>();
+        while (rs.next()) {
+            String key = rs.getString("contact");
+            contactsKeys.add(key);
+        }
+        return contactsKeys;
+    }
+
+    private List<Contact> selectContacts(List<String> contactsKeys) {
+        List<Contact> contacts = new ArrayList<>();
+        DAO<Contact, String> daoContacts = new DAOContact();
+        contactsKeys.forEach(k -> {
+            Contact contact = daoContacts.select(k).get();
+            contacts.add(contact);
+        });
+        return contacts;
+    }
+
+    public void removeClientContact(Contact contact){
+        String sql = "DELETE FROM ClientContacts WHERE client = ? AND contact = ?";
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setString(1, contact.getCompany().getCnpjOrCpf());
+            stmt.setString(2, contact.getEmail());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addClientContact(Contact contact){
+        if(hasContact(contact))
+            return;
+
+        String sql = "INSERT INTO ClientContacts(client, contact) VALUES(?, ?)";
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setString(1, contact.getCompany().getCnpjOrCpf());
+            stmt.setString(2, contact.getEmail());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean hasContact(Contact contact){
+        String sql = "SELECT * FROM ClientContacts WHERE client = ? AND contact = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setString(1, contact.getCompany().getCnpjOrCpf());
+            stmt.setString(2, contact.getEmail());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

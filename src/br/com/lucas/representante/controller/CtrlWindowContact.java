@@ -1,6 +1,8 @@
 package br.com.lucas.representante.controller;
 
 import br.com.lucas.representante.model.entities.Contact;
+import br.com.lucas.representante.model.usecases.UCManageContact;
+import br.com.lucas.representante.persistence.dao.DAOContact;
 import br.com.lucas.representante.view.util.InputValidator;
 import br.com.lucas.representante.view.util.TextFieldFormater;
 import javafx.event.ActionEvent;
@@ -31,6 +33,7 @@ public class CtrlWindowContact {
     @FXML
     private void initialize(){
         configureTextFields();
+        setupTxtEmailHandler();
     }
 
     private void configureTextFields() {
@@ -39,6 +42,16 @@ public class CtrlWindowContact {
         TextFieldFormater.formatAsRG(txtRG);
         TextFieldFormater.formatAsNumericWithDashesAndDots(txtCPF);
         TextFieldFormater.formatAsPhoneNumber(txtTelefone);
+    }
+
+    private void setupTxtEmailHandler() {
+        txtEmail.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if(!newVal) {
+                UCManageContact ucManageContact = new UCManageContact(new DAOContact());
+                String email = txtEmail.getText().trim().toLowerCase();
+                ucManageContact.select(email).ifPresent(contact -> setEntityToView(contact));
+            }
+        });
     }
 
     public void setEntityToView(Contact contact) {

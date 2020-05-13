@@ -15,6 +15,10 @@ public class BankAccount {
         this.account = account;
     }
 
+    public BankAccount() {
+
+    }
+
     @Override
     public String toString() {
         return "BankAccount{" +

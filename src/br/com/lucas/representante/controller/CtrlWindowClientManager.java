@@ -1,7 +1,7 @@
 package br.com.lucas.representante.controller;
 
 import br.com.lucas.representante.model.entities.Client;
-import br.com.lucas.representante.model.usecases.UCManageClientPersistence;
+import br.com.lucas.representante.model.usecases.UCManageClient;
 import br.com.lucas.representante.persistence.dao.DAOClient;
 import br.com.lucas.representante.view.loaders.WindowClient;
 import javafx.collections.FXCollections;
@@ -40,10 +40,10 @@ public class CtrlWindowClientManager {
     private boolean showingInactives;
     private boolean showingProspections;
 
-    private UCManageClientPersistence ucManageClient;
+    private UCManageClient ucManageClient;
 
     public CtrlWindowClientManager(){
-        ucManageClient = new UCManageClientPersistence(new DAOClient());
+        ucManageClient = new UCManageClient(new DAOClient());
     }
 
     @FXML
@@ -150,6 +150,7 @@ public class CtrlWindowClientManager {
         }
     }
 
-    public void exportData(ActionEvent actionEvent) {
+    public void exportData(ActionEvent actionEvent)  {
+
     }
 }

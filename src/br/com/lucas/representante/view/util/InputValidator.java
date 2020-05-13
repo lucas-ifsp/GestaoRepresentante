@@ -29,8 +29,9 @@ public class InputValidator {
         return applyPattern(pattern, input);
     }
 
-    public static boolean isTelefone(String input){
-        String pattern = "^(\\(?\\d{2}\\)?\\s?)?(9?\\s?\\d{4}(\\-|\\s)?\\d{4})$";
+    public static boolean isTelefone(String input) {
+        String pattern = "^(\\(?\\d{2}\\)?\\s?)?(\\d{4,5}(\\-|\\s)?\\d{4})\\s?(\\(\\d{4}\\))?$";
+        //String pattern = "^(\\(?\\d{2}\\)?\\s?)?(9?\\s?\\d{4}(\\-|\\s)?\\d{4})\\s?(\\(\\d{4}\\))?$";
         return applyPattern(pattern, input);
     }
 

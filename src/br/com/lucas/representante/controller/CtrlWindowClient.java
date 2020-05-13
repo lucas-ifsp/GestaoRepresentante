@@ -1,7 +1,7 @@
 package br.com.lucas.representante.controller;
 
 import br.com.lucas.representante.model.entities.*;
-import br.com.lucas.representante.model.usecases.UCManageClientPersistence;
+import br.com.lucas.representante.model.usecases.UCManageClient;
 import br.com.lucas.representante.persistence.dao.*;
 import br.com.lucas.representante.view.loaders.WindowContact;
 import br.com.lucas.representante.view.loaders.WindowHistory;
@@ -65,13 +65,13 @@ public class CtrlWindowClient {
     @FXML Button btnExcluir;
 
     private Client client;
-    private UCManageClientPersistence ucManageClient;
+    private UCManageClient ucManageClient;
     private ObservableList<Contact> tableContactsData;
     private ObservableList<History> tableHistoryData;
     private String errorMessage;
 
     public CtrlWindowClient(){
-        ucManageClient = new UCManageClientPersistence(
+        ucManageClient = new UCManageClient(
                 new DAOClient(),
                 new DAOAddress(),
                 new DAOBankAccount(),
@@ -113,7 +113,6 @@ public class CtrlWindowClient {
     }
 
     private void configureTextFields() {
-        TextFieldFormater.formatAsLiteralWithAccent(txtRua);
         TextFieldFormater.formatAsLiteralWithAccent(txtBairro);
         TextFieldFormater.formatAsLiteralWithAccent(txtCidade);
         TextFieldFormater.formatAsNumeric(txtNumero);

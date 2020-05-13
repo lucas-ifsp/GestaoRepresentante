@@ -24,6 +24,10 @@ public class Contact {
         this.birthday = birthday;
     }
 
+    public Contact() {
+
+    }
+
     public boolean matchesSearchNameOrEmail(String substring){
         boolean isContainedInName = name.contains(substring);
         boolean isContainedInEmail = email.contains(substring);

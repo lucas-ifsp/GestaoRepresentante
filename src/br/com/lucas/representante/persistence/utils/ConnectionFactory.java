@@ -1,5 +1,7 @@
 package br.com.lucas.representante.persistence.utils;
 
+import org.sqlite.SQLiteDataSource;
+
 import java.sql.*;
 
 public class ConnectionFactory implements AutoCloseable{
@@ -19,8 +21,11 @@ public class ConnectionFactory implements AutoCloseable{
     }
 
     private static void instantiateConnectionIfNull() throws SQLException {
-        if(connection == null)
-            connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+        SQLiteDataSource ds = new SQLiteDataSource();
+        ds.setUrl("jdbc:sqlite:"+PathFinder.find()+"database.db");
+        if(connection == null) {
+            connection = ds.getConnection();
+        }
     }
 
     public static PreparedStatement createPreparedStatement(String sql) {

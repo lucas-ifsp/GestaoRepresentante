@@ -1,11 +1,21 @@
 package br.com.lucas.representante.persistence.utils;
 
+import br.com.lucas.representante.model.entities.Address;
+import br.com.lucas.representante.model.entities.BankAccount;
+import br.com.lucas.representante.model.entities.Client;
+import br.com.lucas.representante.model.entities.Contact;
+import br.com.lucas.representante.model.usecases.UCImportData;
+import br.com.lucas.representante.persistence.dao.DAOAddress;
+import br.com.lucas.representante.persistence.dao.DAOBankAccount;
+import br.com.lucas.representante.persistence.dao.DAOClient;
+import br.com.lucas.representante.persistence.dao.DAOContact;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseBuilder {
 
@@ -13,24 +23,25 @@ public class DatabaseBuilder {
         if(!isDatabaseAvailable()){
             System.out.println("Database is missing. Building database: \n");
             buildTables();
-            populateDatabase();
+            importDataFromCSV();
         }
     }
 
     private boolean isDatabaseAvailable(){
-        return Files.exists(Paths.get("database.db"));
+        return Files.exists(Paths.get(PathFinder.find()+"database.db"));
     }
 
     private void buildTables() {
         try (Statement stmt = ConnectionFactory.createStatement()) {
             stmt.addBatch(createClientTableSql());
             stmt.addBatch(createContactTableSql());
+            stmt.addBatch(createClientContactsTableSql());
             stmt.addBatch(createAddressTableSql());
             stmt.addBatch(createBankAccountTableSql());
             stmt.addBatch(createHistoryTableSql());
             stmt.executeBatch();
 
-            System.out.println("Database has been created ...");
+            System.out.println("Database successfully created.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -69,9 +80,22 @@ public class DatabaseBuilder {
         builder.append("phone TEXT, \n");
         builder.append("cpf TEXT, \n");
         builder.append("rg TEXT, \n");
-        builder.append("birthday TEXT, \n");
+        builder.append("birthday TEXT\n");
+        builder.append("); \n");
+
+        System.out.println(builder.toString());
+        return builder.toString();
+    }
+
+    private String createClientContactsTableSql(){
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("CREATE TABLE ClientContacts (\n");
         builder.append("client TEXT NOT NULL, \n");
+        builder.append("contact TEXT NOT NULL, \n");
+        builder.append("PRIMARY KEY (client, contact), \n");
         builder.append("FOREIGN KEY(client) REFERENCES client(cnpjOrCpf)\n");
+        builder.append("FOREIGN KEY(contact) REFERENCES Contact(email)\n");
         builder.append("); \n");
 
         System.out.println(builder.toString());
@@ -129,37 +153,32 @@ public class DatabaseBuilder {
         return builder.toString();
     }
 
-    private  void populateDatabase(){
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:database.db");
-             Statement stmt = conn.createStatement()) {
-            stmt.addBatch("insert into Client (companyName, tradeName, companyId, cnpjOrCpf, stateRegistration, clientSince, cityRegistration, phone1, phone2, fax, prospection, active) values ('INSTITUTO FEDERAL DE EDUCACAO, CIENCIA E TECNOLOGIA DE SAO PAULO', 'INSTITUTO FEDERAL DE SAO PAULO', 'IFSP', '10.882.594/0001-65', '22.333.4444-1', '2000-01-02', '22.22.333.4444.333', '(16) 9739-8555', '(16) 4913 2828', '(16) 3303-0000', 0, 1);");
-            stmt.addBatch("insert into Client (companyName, tradeName, companyId, cnpjOrCpf, stateRegistration, clientSince, cityRegistration, phone1, phone2, fax, prospection, active) values ('Universidade Federal de São Carlos', 'Federupa', 'UFSCar', '45.358.058/0001-40', '33.444.5555-1', '2014-02-25', '11.11.222.5555.000', '(11) 9739-8555', '(11) 4913 2828', '(11) 3303-0000', 0, 1);");
-            stmt.addBatch("insert into Client (companyName, tradeName, companyId, cnpjOrCpf, stateRegistration, clientSince, cityRegistration, phone1, phone2, fax, prospection, active) values ('Universidade Estadual Paulista Júlio de Mesquita Filho', 'Universidade Estadual Paulista', 'UNESP', '48.031.918/0001-24', '55.555.5555-1', '2012-12-15', '44.11.444.1111.000', '(11) 9723-8532', '(11) 2313 2828', '(11) 3332-0230', 0, 1);");
+    private void importDataFromCSV() {
+        System.out.println("CSV file has been loaded. Importing clients...");
+        UCImportData uc = new UCImportData();
+        List<Client> clients =  new ArrayList<>();
 
-            stmt.addBatch("INSERT INTO Address(street, number, area, city, state, " +
-                    "zipCode, pointOfReference, client) " +
-                    "VALUES('Rod. Araraquara-Jaú', 1, 'Machados', 'Araraquara', 'SP', '14800-901', 'Perto da Heineken', '48.031.918/0001-24')");
+        clients.addAll(uc.importFromCSV(PathFinder.find()+"import1.csv"));
+        clients.addAll(uc.importFromCSV(PathFinder.find()+"import2.csv"));
+        clients.addAll(uc.importFromCSV(PathFinder.find()+"import3.csv"));
+        clients.addAll(uc.importFromCSV(PathFinder.find()+"import4.csv"));
 
+        System.out.println("SIZE OF" + clients.size());
 
-            stmt.addBatch("INSERT INTO Address(street, number, area, city, state, " +
-                            "zipCode, pointOfReference, client) " +
-                            "VALUES('Rua Pedro Vicente', 625, 'Canindé', 'São Paulo', 'SP', '01109-010', 'Metro Armênia', '10.882.594/0001-65')");
+        DAOClient daoClient = new DAOClient();
+        DAO<Address,String> daoAddress = new DAOAddress();
+        DAO<BankAccount, String> daoAccount = new DAOBankAccount();
+        DAO<Contact, String> daoContact = new DAOContact();
 
-            stmt.addBatch("INSERT INTO BankAccount(bankName, bankNumber, agency, " +
-                    "account, client) VALUES('Banco do Brasil', '001','0405-x', '0302', '10.882.594/0001-65')");
-
-            stmt.addBatch("INSERT INTO BankAccount(bankName, bankNumber, agency, " +
-                    "account, client) VALUES('Nubank', '260', '213213-0', '0001', '45.358.058/0001-40')");
-
-            stmt.addBatch("INSERT INTO BankAccount(bankName, bankNumber, agency, " +
-                    "account, client) VALUES('Caixa Econômica', '021', '32131-1', '2031-2', '48.031.918/0001-24')");
-
-
-            stmt.executeBatch();
-            stmt.close();
-            System.out.println("Database has been populated ...");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        clients.forEach(client -> {
+            daoClient.save(client);
+            daoAddress.save(client.getAddress());
+            daoAccount.save(client.getAccount());
+            client.getContacts().forEach(contact -> {
+                daoContact.saveOrUpdate(contact);
+                daoClient.addClientContact(contact);
+            });
+        });
+        System.out.println("Clients have been imported.");
     }
 }

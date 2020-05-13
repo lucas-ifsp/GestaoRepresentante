@@ -1,5 +1,7 @@
 package br.com.lucas.representante.persistence.utils;
 
+import br.com.lucas.representante.model.entities.Client;
+import br.com.lucas.representante.model.entities.Contact;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;

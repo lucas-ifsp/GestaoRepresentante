@@ -21,6 +21,10 @@ public class Address {
         this.pointOfReference = pointOfReference;
     }
 
+    public Address() {
+
+    }
+
     public boolean matchesSearchString(String substring){
         String cityLowerCase = city.toLowerCase();
         String subStringLowerCase = substring.toLowerCase();
