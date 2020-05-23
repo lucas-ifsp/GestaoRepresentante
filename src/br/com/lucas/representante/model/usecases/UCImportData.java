@@ -18,10 +18,13 @@ public class UCImportData {
     private StringBuilder logBuilder = new StringBuilder();
     private Map<String, Client> clients = new LinkedHashMap<>();
     private Path path;
+    private int collisionCount = 1;
 
-    public List<Client> importFromCSV(String filePath) {
-        setFilePath(filePath);
-        importClientsFromFile(path);
+    public List<Client> importFromCSV(String... filePaths) {
+        for(String filePath : filePaths) {
+            setFilePath(filePath);
+            importClientsFromFile(path);
+        }
         exportLog();
         List<Client> importedClients = new ArrayList(clients.values());
         return importedClients;
@@ -58,10 +61,15 @@ public class UCImportData {
 
     private void importClient(String rawData) {
         Client client = parseClient(rawData);
-        if(clientNotAlreadyImported(client))
+
+        if(clientNotAlreadyImported(client)) {
             clients.put(client.getCnpjOrCpf(), client);
-        else
+            System.out.println(String.format("Imported client #%d: %s", clients.size()+1, client));
+        }
+        else{
             logImportCollision(client);
+            System.out.println(String.format("Collision #%d while client: %s", ++collisionCount, client));
+        }
     }
 
     private Client parseClient(String line) {
@@ -94,7 +102,8 @@ public class UCImportData {
 
     private LocalDate extractDate(String line, int position) {
         String[] data = line.split(",");
-        String clearedData = data[position].replaceAll("[a-zA-Z()\\s\"]", "");
+        int safePosition = Math.min(position, data.length - 1);
+        String clearedData = data[safePosition].replaceAll("[a-zA-Z()\\s\"]", "");
         if(!clearedData.isEmpty() && !clearedData.equals("00/00/00")){
             String[] dateParts = clearedData.split("/");
             String formatedYear = Integer.parseInt(dateParts[2].charAt(0)+"") < 5 ?  "20" + dateParts[2] :  "19" + dateParts[2];
@@ -111,7 +120,8 @@ public class UCImportData {
 
     private String extractText(String line, int position) {
         String [] data = line.split(",");
-        String clearedData = data[position].replaceAll("\"", "");
+        int safePosition = Math.min(position, data.length - 1);
+        String clearedData = data[safePosition].replaceAll("\"", "");
         return clearedData.trim();
     }
 

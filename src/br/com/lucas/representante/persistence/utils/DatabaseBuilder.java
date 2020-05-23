@@ -1,9 +1,6 @@
 package br.com.lucas.representante.persistence.utils;
 
-import br.com.lucas.representante.model.entities.Address;
-import br.com.lucas.representante.model.entities.BankAccount;
-import br.com.lucas.representante.model.entities.Client;
-import br.com.lucas.representante.model.entities.Contact;
+import br.com.lucas.representante.model.entities.*;
 import br.com.lucas.representante.model.usecases.UCImportData;
 import br.com.lucas.representante.persistence.dao.DAOAddress;
 import br.com.lucas.representante.persistence.dao.DAOBankAccount;
@@ -14,8 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DatabaseBuilder {
 
@@ -156,21 +154,21 @@ public class DatabaseBuilder {
     private void importDataFromCSV() {
         System.out.println("CSV file has been loaded. Importing clients...");
         UCImportData uc = new UCImportData();
-        List<Client> clients =  new ArrayList<>();
 
-        clients.addAll(uc.importFromCSV(PathFinder.find()+"import1.csv"));
-        clients.addAll(uc.importFromCSV(PathFinder.find()+"import2.csv"));
-        clients.addAll(uc.importFromCSV(PathFinder.find()+"import3.csv"));
-        clients.addAll(uc.importFromCSV(PathFinder.find()+"import4.csv"));
+        List<Client> importedClients =  uc.importFromCSV(
+                PathFinder.find()+"imp2.csv",
+                PathFinder.find()+"imp1.csv");
 
-        System.out.println("SIZE OF" + clients.size());
+        List<Client> sortedClients = importedClients.stream().
+                sorted(Comparator.comparing(Client::getCompanyName)).
+                collect(Collectors.toList());
 
         DAOClient daoClient = new DAOClient();
         DAO<Address,String> daoAddress = new DAOAddress();
         DAO<BankAccount, String> daoAccount = new DAOBankAccount();
         DAO<Contact, String> daoContact = new DAOContact();
 
-        clients.forEach(client -> {
+        sortedClients.forEach(client -> {
             daoClient.save(client);
             daoAddress.save(client.getAddress());
             daoAccount.save(client.getAccount());
