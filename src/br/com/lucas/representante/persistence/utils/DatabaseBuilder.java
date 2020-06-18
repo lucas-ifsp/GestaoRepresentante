@@ -1,19 +1,8 @@
 package br.com.lucas.representante.persistence.utils;
-
-import br.com.lucas.representante.model.entities.*;
-import br.com.lucas.representante.model.usecases.UCImportData;
-import br.com.lucas.representante.persistence.dao.DAOAddress;
-import br.com.lucas.representante.persistence.dao.DAOBankAccount;
-import br.com.lucas.representante.persistence.dao.DAOClient;
-import br.com.lucas.representante.persistence.dao.DAOContact;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DatabaseBuilder {
 
@@ -21,12 +10,11 @@ public class DatabaseBuilder {
         if(!isDatabaseAvailable()){
             System.out.println("Database is missing. Building database: \n");
             buildTables();
-            importDataFromCSV();
         }
     }
 
     private boolean isDatabaseAvailable(){
-        return Files.exists(Paths.get(PathFinder.find()+"database.db"));
+        return Files.exists(Paths.get("database.db"));
     }
 
     private void buildTables() {
@@ -149,34 +137,5 @@ public class DatabaseBuilder {
 
         System.out.println(builder.toString());
         return builder.toString();
-    }
-
-    private void importDataFromCSV() {
-        System.out.println("CSV file has been loaded. Importing clients...");
-        UCImportData uc = new UCImportData();
-
-        List<Client> importedClients =  uc.importFromCSV(
-                PathFinder.find()+"imp2.csv",
-                PathFinder.find()+"imp1.csv");
-
-        List<Client> sortedClients = importedClients.stream().
-                sorted(Comparator.comparing(Client::getCompanyName)).
-                collect(Collectors.toList());
-
-        DAOClient daoClient = new DAOClient();
-        DAO<Address,String> daoAddress = new DAOAddress();
-        DAO<BankAccount, String> daoAccount = new DAOBankAccount();
-        DAO<Contact, String> daoContact = new DAOContact();
-
-        sortedClients.forEach(client -> {
-            daoClient.save(client);
-            daoAddress.save(client.getAddress());
-            daoAccount.save(client.getAccount());
-            client.getContacts().forEach(contact -> {
-                daoContact.saveOrUpdate(contact);
-                daoClient.addClientContact(contact);
-            });
-        });
-        System.out.println("Clients have been imported.");
     }
 }

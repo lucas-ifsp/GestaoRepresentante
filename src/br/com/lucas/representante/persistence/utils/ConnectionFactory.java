@@ -2,7 +2,10 @@ package br.com.lucas.representante.persistence.utils;
 
 import org.sqlite.SQLiteDataSource;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ConnectionFactory implements AutoCloseable{
 
@@ -22,7 +25,7 @@ public class ConnectionFactory implements AutoCloseable{
 
     private static void instantiateConnectionIfNull() throws SQLException {
         SQLiteDataSource ds = new SQLiteDataSource();
-        ds.setUrl("jdbc:sqlite:"+PathFinder.find()+"database.db");
+        ds.setUrl("jdbc:sqlite:database.db");
         if(connection == null) {
             connection = ds.getConnection();
         }
